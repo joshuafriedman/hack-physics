@@ -1,6 +1,6 @@
 var canvas = document.getElementById("myCanvas");
-var numBalls = 20;
-var radius = 10;
+var numBalls = 25;
+var radius = 5;
 var context;
 var g = 0;
 
