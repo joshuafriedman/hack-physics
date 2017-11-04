@@ -37,12 +37,20 @@ function onEachStep() {
         ball.vy += g;
         ball.x += ball.vx;
         ball.y += ball.vy;
-        if (ball.y > canvas.height - radius) {
-            ball.y = canvas.height - radius;
-            ball.vy *= -0.7;
+
+        if (ball.y >= canvas.height - radius) {
+            //ball.y = canvas.height - radius;
+            ball.vy *= -1;
         }
-        if (ball.x > canvas.width + radius) {
-            ball.x = -radius;
+        if (ball.x >= canvas.width - radius) {
+          //  ball.x = canvas.width + radius;
+            ball.vx *= -1;
+        }
+        if (ball.y <= radius+1){
+            ball.vy *= -1;
+        }
+        if (ball.x <= radius){
+            ball.vx *= -1;
         }
         ball.draw(context);
     }
