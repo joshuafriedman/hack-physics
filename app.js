@@ -46,8 +46,8 @@ function onEachStep() {
         }
         ball.draw(context);
     }
-    for(var k=0; k < numBalls; k++){
-        for(var j=1; j<numBalls; j++)
+    for(var k=0; k < numBalls -1; k++){
+        for(var j=1; j < numBalls ; j++)
         if(length (balls[k], balls[j]) <= 2*radius) {
             afterCollision(balls[k], balls[j]);
         }
