@@ -1,8 +1,8 @@
 var canvas = document.getElementById("myCanvas");
-var numBalls = 10;
+var numBalls = 3;
 var radius = 10;
 var context;
-var g = 3;
+var g = 0.2;
 
 if (canvas.getContext) {
     context = canvas.getContext("2d");
@@ -14,14 +14,14 @@ function init() {
     for (var i = 0; i < numBalls; i++) {
         var ball = new Ball(radius, getColor());
         console.log(ball);
-        ball.x = 50;
-        ball.y = 75;
+        ball.x = Math.random()*600+10;
+        ball.y = Math.random()*100+10;
         ball.vx = Math.random() * 5;
-        ball.vy = (Math.random() - 0.5) * 4;
+        ball.vy = (Math.random() - 0.5) * 1;
         ball.draw(context);
         balls.push(ball);
     }
-    setInterval(onEachStep, 1000 / 60); // 60 fps
+    setInterval(onEachStep, 1000 / 70); // 60 fps
 }
 
 function getColor() {
@@ -39,25 +39,37 @@ function onEachStep() {
         ball.y += ball.vy;
         if (ball.y > canvas.height - radius) {
             ball.y = canvas.height - radius;
-            ball.vy *= -0.8;
+            ball.vy *= -0.7;
         }
         if (ball.x > canvas.width + radius) {
             ball.x = -radius;
         }
         ball.draw(context);
-       for(var k=0; k < numBalls; k++){
+    }
+    for(var k=0; k < numBalls; k++){
         for(var j=1; j<numBalls; j++)
-        if(Math.abs(balls[k].x - balls[j].x) < 2*radius){
-            afterCollision(balls[k], balls[j], 1);
+        if(length (balls[k], balls[j]) <= 2*radius) {
+            afterCollision(balls[k], balls[j]);
         }
     }
 }
 
-function afterCollision(b1, b2, force) {
-    b1.vx *= -force;
+function length(b1, b2){
+    var squareDistance = Math.pow((b1.x-b2.x), 2) + Math.pow((b1.y-b2.y), 2);
+    return Math.sqrt(squareDistance);
+};
+
+function afterCollision(b1, b2) {
+    temp_vx = b1.vx;
+    b1.vx = b2.vx;
+    b2.vx = temp_vx;
+    temp_vy = b1.vy;
+    b1.vy = b2.vy;
+    b2.vy = temp_vy;
+    /*b1.vx *= -force;
     b1.vy *= -force;
     b2.vx *= -force;
-    b2.vy *= -force;
+    b2.vy *= -force;*/
     if (b1.y > canvas.height - radius) {
         b1.y = canvas.height - radius;
         b1.vy *= -0.7;
@@ -77,6 +89,17 @@ function afterCollision(b1, b2, force) {
     b2.draw(context);
 
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
