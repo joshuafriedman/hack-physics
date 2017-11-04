@@ -1,5 +1,5 @@
 var canvas = document.getElementById("myCanvas");
-var numBalls = 3;
+var numBalls = 10;
 var radius = 10;
 var context;
 var g = 0.2;
@@ -66,10 +66,7 @@ function afterCollision(b1, b2) {
     temp_vy = b1.vy;
     b1.vy = b2.vy;
     b2.vy = temp_vy;
-    /*b1.vx *= -force;
-    b1.vy *= -force;
-    b2.vx *= -force;
-    b2.vy *= -force;*/
+
     if (b1.y > canvas.height - radius) {
         b1.y = canvas.height - radius;
         b1.vy *= -0.7;
