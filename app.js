@@ -1,8 +1,8 @@
 var canvas = document.getElementById("myCanvas");
-var numBalls = 10;
+var numBalls = 20;
 var radius = 10;
 var context;
-var g = 0.2;
+var g = 0;
 
 if (canvas.getContext) {
     context = canvas.getContext("2d");
@@ -17,7 +17,7 @@ function init() {
         ball.x = Math.random()*600+10;
         ball.y = Math.random()*100+10;
         ball.vx = Math.random() * 5;
-        ball.vy = (Math.random() - 0.5) * 1;
+        ball.vy = (Math.random() - 0.5) * 5;
         ball.draw(context);
         balls.push(ball);
     }
@@ -54,11 +54,11 @@ function onEachStep() {
         }
         ball.draw(context);
     }
-    for(var k=0; k < numBalls -1; k++){
-        for(var j=k+1; j < numBalls ; j++)
-        if(length (balls[k], balls[j]) <= 2*radius) {
-            afterCollision(balls[k], balls[j]);
-        }
+    for(var k=0; k < numBalls-1; k++){
+        for(var j=k+1; j<numBalls; j++)
+            if(length (balls[k], balls[j]) <= 2*radius) {
+                afterCollision(balls[k], balls[j]);
+            }
     }
 }
 
@@ -80,7 +80,10 @@ function afterCollision(b1, b2) {
     b1.y = b1.y + b1.vy * factor;
     b2.x = b2.x + b2.vx * factor;
     b2.y = b2.y + b2.vy * factor;
-    
+    /*b1.vx *= -force;
+    b1.vy *= -force;
+    b2.vx *= -force;
+    b2.vy *= -force;*/
     if (b1.y > canvas.height - radius) {
         b1.y = canvas.height - radius;
         b1.vy *= -0.7;
