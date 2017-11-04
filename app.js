@@ -67,6 +67,12 @@ function afterCollision(b1, b2) {
     b1.vy = b2.vy;
     b2.vy = temp_vy;
 
+    var factor = 0.5;
+    b1.x = b1.x + b1.vx * factor;
+    b1.y = b1.y + b1.vy * factor;
+    b2.x = b2.x + b2.vx * factor;
+    b2.y = b2.y + b2.vy * factor;
+    
     if (b1.y > canvas.height - radius) {
         b1.y = canvas.height - radius;
         b1.vy *= -0.7;
