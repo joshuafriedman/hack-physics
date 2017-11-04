@@ -80,18 +80,15 @@ function afterCollision(b1, b2) {
     b1.y = b1.y + b1.vy * factor;
     b2.x = b2.x + b2.vx * factor;
     b2.y = b2.y + b2.vy * factor;
-    /*b1.vx *= -force;
-    b1.vy *= -force;
-    b2.vx *= -force;
-    b2.vy *= -force;*/
-    if (b1.y > canvas.height - radius) {
+    
+    /*if (b1.y > canvas.height - radius) {
         b1.y = canvas.height - radius;
         b1.vy *= -0.7;
     }
     if (b1.x > canvas.width + radius) {
         b1.x = -radius;
     }
-    b1.draw(context);
+ 
 
     if (b2.y > canvas.height - radius) {
         b2.y = canvas.height - radius;
@@ -99,7 +96,23 @@ function afterCollision(b1, b2) {
     }
     if (b2.x > canvas.width + radius) {
         b2.x = -radius;
+    }*/
+    if (ball.y >= canvas.height - radius) {
+        //ball.y = canvas.height - radius;
+        ball.vy *= -1;
     }
+    if (ball.x >= canvas.width - radius) {
+        //  ball.x = canvas.width + radius;
+        ball.vx *= -1;
+    }
+    if (ball.y <= radius+1){
+        ball.vy *= -1;
+    }
+    if (ball.x <= radius){
+        ball.vx *= -1;
+    }
+    
+    b1.draw(context);
     b2.draw(context);
 
 }
