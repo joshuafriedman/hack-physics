@@ -45,8 +45,38 @@ function onEachStep() {
             ball.x = -radius;
         }
         ball.draw(context);
+       for(var k=0; k < numBalls; k++){
+        for(var j=1; j<numBalls; j++)
+        if(Math.abs(balls[k].x - balls[j].x) < 2*radius){
+            afterCollision(balls[k], balls[j], 1);
+        }
     }
-};
+}
+
+function afterCollision(b1, b2, force) {
+    b1.vx *= -force;
+    b1.vy *= -force;
+    b2.vx *= -force;
+    b2.vy *= -force;
+    if (b1.y > canvas.height - radius) {
+        b1.y = canvas.height - radius;
+        b1.vy *= -0.7;
+    }
+    if (b1.x > canvas.width + radius) {
+        b1.x = -radius;
+    }
+    b1.draw(context);
+
+    if (b2.y > canvas.height - radius) {
+        b2.y = canvas.height - radius;
+        b2.vy *= -0.7;
+    }
+    if (b2.x > canvas.width + radius) {
+        b2.x = -radius;
+    }
+    b2.draw(context);
+
+}
 
 
 
