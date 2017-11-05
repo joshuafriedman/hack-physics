@@ -11,6 +11,8 @@ var vxSpeed = Math.random()*5;
 var stopInit;
 var ifFirstTime = true;
 var numLoops = 0;
+var hgt = 80;
+var gap = 150;
 
 if (canvas.getContext) {
     context = canvas.getContext("2d");
@@ -111,7 +113,7 @@ function onEachStep() {
         ball.x += ball.vx;
         ball.y += ball.vy;
 
-        /*if (ball.y >= canvas.height - ball.radius) {
+       /* if (ball.y >= canvas.height - ball.radius) {
             //ball.y = canvas.height - radius;
             ball.vy *= -1;
         }
@@ -132,16 +134,16 @@ function onEachStep() {
         if (ball.x >= canvas.width - ball.radius) {   //past right border, go to next line
             //  ball.x = canvas.width + radius;
             //ball.vx *= -1;
-            if ((hgt*2 + gap*2) > ball.y || (hgt*3 + gap*2) < ball.y) {
+            if ((hgt*2 + gap*2) > ball.y ) {
                 ball.x = ball.radius + 1;
+                ball.y += (hgt + gap);
             }
             else if((hgt*2 + gap*2) <= ball.y && (hgt*3 + gap*2) >= ball.y ) ball.count++;
-
-            ball.y += (hgt + gap);
         }
         if (ball.y <= ball.radius+1){            //past top border, rebound
             ball.vy *= -1;
         }
+
         ball.draw(context);
     }
     for(var k=0; k < balls.length-1; k++){
@@ -191,12 +193,3 @@ function afterCollision(b1, b2) {
     b2.draw(context);
 
 }
-
-
-
-
-
-
-
-
-
