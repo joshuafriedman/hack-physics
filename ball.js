@@ -15,9 +15,14 @@ function Ball(name) {
         this.radius = 10;
         this.color = "#034991"
     }
-    this.x = 0;
+    else if (name == "inert"){
+        this.mass = 10;
+        this.radius = 5;
+        this.color = "#000000";
+    }
+    this.x = this.radius+1;
     this.y = 0;
-    this.vx = 0;
+    this.vx = Math.random() * 3;
     this.vy = 0;
     this.draw = function (context) {
         context.fillStyle = this.color;
