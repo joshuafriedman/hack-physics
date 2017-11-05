@@ -111,7 +111,7 @@ function onEachStep() {
         ball.x += ball.vx;
         ball.y += ball.vy;
 
-        if (ball.y >= canvas.height - ball.radius) {
+        /*if (ball.y >= canvas.height - ball.radius) {
             //ball.y = canvas.height - radius;
             ball.vy *= -1;
         }
@@ -124,6 +124,23 @@ function onEachStep() {
         }
         if (ball.x <= ball.radius){
             ball.vx *= -1;
+        }*/
+        if (ball.y >= hgt - ball.radius) {      //past bottom border, then rebounds
+            //ball.y = canvas.height - radius;
+            ball.vy *= -1;
+        }
+        if (ball.x >= canvas.width - ball.radius) {   //past right border, go to next line
+            //  ball.x = canvas.width + radius;
+            //ball.vx *= -1;
+            if ((hgt*2 + gap*2) > ball.y || (hgt*3 + gap*2) < ball.y) {
+                ball.x = ball.radius + 1;
+            }
+            else if((hgt*2 + gap*2) <= ball.y && (hgt*3 + gap*2) >= ball.y ) ball.count++;
+
+            ball.y += (hgt + gap);
+        }
+        if (ball.y <= ball.radius+1){            //past top border, rebound
+            ball.vy *= -1;
         }
         ball.draw(context);
     }
