@@ -8,6 +8,10 @@ var numBalls = 0;
 var timeInterval = 1000/40;
 var timePassed = 0;
 var vxSpeed = Math.random()*5;
+var stopInit;
+var ifFirstTime = true;
+var numLoops = 0;
+
 if (canvas.getContext) {
     context = canvas.getContext("2d");
     init();
@@ -46,53 +50,47 @@ function init() {
         balls.push(ball);
     }
     numBalls += 50;
-    numBalls += (numA + numB + numC);
-
-    for (var i = 0; i < numA; i++) {
-        var ballA = new Ball("A");
-        console.log(ballA);
-        ballA.vx = vxSpeed;
-        //ballA.x = Math.random()*600+10;
-    //    ballA.x = ballA.radius+1;
-        ballA.y = Math.random()*100+ballA.radius;
-        //ballA.vx = Math.random() * 5;
-        ballA.vy = (Math.random() - 0.5) * 5;
-        ballA.draw(context);
-        balls.push(ballA);
-    }
-    for (var j = 0; j < numB; j++){
-        var ballB = new Ball("B");
-        console.log(ballB);
-        ballB.vx = vxSpeed;
-        //allB.x = Math.random()*600+10;
-        ballB.y = Math.random()*100+10;
-      //  ballB.vx = Math.random() * 5;
-        ballB.vy = (Math.random() - 0.5) * 5;
-        ballB.draw(context);
-        balls.push(ballB);
-    }
-    for (var k = 0; k < numC; k++){
-        var ballC = new Ball("C");
-        console.log(ballC);
-        ballC.vx = vxSpeed;
-       // ballC.x = Math.random()*600+10;
-        ballC.y = Math.random()*100+10;
-      // ballC.vx = Math.random() * 5;
-        ballC.vy = (Math.random() - 0.5) * 5;
-        ballC.draw(context);
-        balls.push(ballC);
-    }
     setInterval(onEachStep, timeInterval); // 60 fps
 }
-/*function getColor() {
-    var colors = ["#588C7E", "#F2E394", "#F2AE72", "#D96459", "#8C4646"];
-    let idx = Math.round(Math.random() * colors.length);
-    return colors[idx];
-}*/
 
 function onEachStep() {
     context.clearRect(0, 0, canvas.width, canvas.height);
     timePassed += timeInterval;
+    if (timePassed == 2000){
+        numBalls += (numA + numB + numC);
+
+        for (var i = 0; i < numA; i++) {
+            var ballA = new Ball("A");
+            console.log(ballA);
+            ballA.vx = vxSpeed;
+            ballA.y = Math.random()*100+ballA.radius;
+            ballA.vy = (Math.random() - 0.5) * 5;
+            ballA.draw(context);
+            balls.push(ballA);
+        }
+        for (var j = 0; j < numB; j++){
+            var ballB = new Ball("B");
+            console.log(ballB);
+            ballB.vx = vxSpeed;
+            //allB.x = Math.random()*600+10;
+            ballB.y = Math.random()*100+10;
+            //  ballB.vx = Math.random() * 5;
+            ballB.vy = (Math.random() - 0.5) * 5;
+            ballB.draw(context);
+            balls.push(ballB);
+        }
+        for (var k = 0; k < numC; k++){
+            var ballC = new Ball("C");
+            console.log(ballC);
+            ballC.vx = vxSpeed;
+            // ballC.x = Math.random()*600+10;
+            ballC.y = Math.random()*100+10;
+            // ballC.vx = Math.random() * 5;
+            ballC.vy = (Math.random() - 0.5) * 5;
+            ballC.draw(context);
+            balls.push(ballC);
+        }
+    }
      if (timePassed % 10 == 0) {
         for (var counter = 0; counter < 2; counter++) {
             var ball = new Ball("inert");
@@ -176,3 +174,12 @@ function afterCollision(b1, b2) {
     b2.draw(context);
 
 }
+
+
+
+
+
+
+
+
+
