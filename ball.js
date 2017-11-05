@@ -1,8 +1,20 @@
-function Ball(name, radius, mass) {
+function Ball(name) {
     this.name = name;
-    this.mass = mass;
-    this.radius = radius;
-    this.color = "#000000";
+    if(name == "A") {
+        this.mass = 4;
+        this.radius = 4;
+        this.color = "#309480";
+    }
+    else if(name == "B"){
+        this.mass = 7;
+        this.radius = 7;
+        this.color = "#D96459"
+    }
+    else if (name == "C"){
+        this.mass = 10;
+        this.radius = 10;
+        this.color = "#034991"
+    }
     this.x = 0;
     this.y = 0;
     this.vx = 0;
