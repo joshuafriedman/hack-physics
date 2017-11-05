@@ -1,12 +1,8 @@
 var canvas = document.getElementById("myCanvas");
-//var radius = 2.5;
 var context;
 var g = 0;
 var numA = 20, numB = 20, numC = 20;
 var numBalls = numA + numB + numC;
-//var name1 = "A", name2 = "B", name3 = "C";
-//var radiusA = 2, radiusB = 4, radiusC = 6;
-//var massA = 6, massB = 8, massC = 10;
 
 if (canvas.getContext) {
     context = canvas.getContext("2d");
