@@ -21,6 +21,7 @@ function Ball(name) {
         this.color = "#000000";
     }
     this.x = this.radius+1;
+    this.rowNumber = 1;
     this.y = 0;
     this.vx = Math.random() * 3;
     this.vy = 0;
