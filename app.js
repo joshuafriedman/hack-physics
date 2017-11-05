@@ -7,7 +7,7 @@ var numBalls = 0;
 
 var timeInterval = 1000/40;
 var timePassed = 0;
-
+var vxSpeed = Math.random()*5;
 if (canvas.getContext) {
     context = canvas.getContext("2d");
     init();
@@ -21,7 +21,7 @@ function startSimulation(){
     options.benzene.particles = document.getElementById("benzene-particles").value;
     options.benzene.size = document.getElementById("benzene-size").value;
     options.benzene.mass = document.getElementById("benzene-mass").value;
-    
+
     options.ditch.particles = document.getElementById("dich-particles").value;
     options.ditch.size = document.getElementById("dich-size").value;
     options.ditch.mass = document.getElementById("dich-mass").value;
@@ -29,20 +29,33 @@ function startSimulation(){
     options.acetone.particles = document.getElementById("acetone-particles").value;
     options.acetone.size = document.getElementById("acetone-size").value;
     options.acetone.mass = document.getElementById("acetone-mass").value;
-    console.log(options);    
+    console.log(options);
 }
-
 
 function init() {
     balls = new Array();
-    var numBalls = numA + numB + numC;
+
+    for (var m = 0; m < 50; m++){
+        var ball = new Ball ("inert");
+        console.log(ball);
+        ball.vx = vxSpeed;
+        ball.x = ball.radius+1;
+        ball.vy = Math.random()*5;
+        ball.y = (Math.random()*150);
+        ball.draw(context);
+        balls.push(ball);
+    }
+    numBalls += 50;
+    numBalls += (numA + numB + numC);
+
     for (var i = 0; i < numA; i++) {
         var ballA = new Ball("A");
         console.log(ballA);
-
-        ballA.x = Math.random()*600+10;
-        ballA.y = Math.random()*100+10;
-        ballA.vx = Math.random() * 5;
+        ballA.vx = vxSpeed;
+        //ballA.x = Math.random()*600+10;
+    //    ballA.x = ballA.radius+1;
+        ballA.y = Math.random()*100+ballA.radius;
+        //ballA.vx = Math.random() * 5;
         ballA.vy = (Math.random() - 0.5) * 5;
         ballA.draw(context);
         balls.push(ballA);
@@ -50,10 +63,10 @@ function init() {
     for (var j = 0; j < numB; j++){
         var ballB = new Ball("B");
         console.log(ballB);
-
-        ballB.x = Math.random()*600+10;
+        ballB.vx = vxSpeed;
+        //allB.x = Math.random()*600+10;
         ballB.y = Math.random()*100+10;
-        ballB.vx = Math.random() * 5;
+      //  ballB.vx = Math.random() * 5;
         ballB.vy = (Math.random() - 0.5) * 5;
         ballB.draw(context);
         balls.push(ballB);
@@ -61,10 +74,10 @@ function init() {
     for (var k = 0; k < numC; k++){
         var ballC = new Ball("C");
         console.log(ballC);
-
-        ballC.x = Math.random()*600+10;
+        ballC.vx = vxSpeed;
+       // ballC.x = Math.random()*600+10;
         ballC.y = Math.random()*100+10;
-        ballC.vx = Math.random() * 5;
+      // ballC.vx = Math.random() * 5;
         ballC.vy = (Math.random() - 0.5) * 5;
         ballC.draw(context);
         balls.push(ballC);
@@ -80,13 +93,13 @@ function init() {
 function onEachStep() {
     context.clearRect(0, 0, canvas.width, canvas.height);
     timePassed += timeInterval;
-     if (Math.round(timePassed % 60) == 0) {
+     if (timePassed % 10 == 0) {
         for (var counter = 0; counter < 2; counter++) {
             var ball = new Ball("inert");
             numBalls++;
             console.log(ball);
             ball.color = "#000000";
-            ball.radius = 10;
+            ball.radius = 5;
             ball.x = ball.radius+1;
             ball.y = Math.random() * 100 + 10;
             ball.vx = Math.random() * 5;
