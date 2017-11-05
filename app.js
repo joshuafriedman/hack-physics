@@ -127,21 +127,49 @@ function onEachStep() {
         if (ball.x <= ball.radius){
             ball.vx *= -1;
         }*/
-        if (ball.y >= hgt - ball.radius) {      //past bottom border, then rebounds
-            //ball.y = canvas.height - radius;
-            ball.vy *= -1;
+         if (ball.rowNumber === 1) {
+            if (ball.y >= hgt + ball.radius) {      //past bottom border, then rebounds
+                if (ball.vy > 0)
+                    ball.vy *= -1;
+            }
+            else if (ball.y <= ball.radius){            //past top border, rebound
+                if (ball.vy < 0)
+                    ball.vy *= -1;
+            }
+       }
+        else if (ball.rowNumber === 2){
+            if (ball.y >= ball.rowNumber*hgt + gap + ball.radius){
+                if (ball.vy > 0)
+                    ball.vy *= -1;
+            }
+            else if (ball.y <= hgt+gap - ball.radius){
+                if (ball.vy < 0)
+                    ball.vy*=-1;
+            }
+        }
+        else if (ball.rowNumber === 3){
+            if (ball.y >= ball.rowNumber*hgt + (ball.rowNumber-1) * gap - ball.radius){
+                if (ball.vy > 0)
+                    ball.vy *= -1;
+            }
+            else if (ball.y <= 2*hgt + 2 * gap + ball.radius){
+                if (ball.vy < 0)
+                    ball.vy *= -1;
+            }
         }
         if (ball.x >= canvas.width - ball.radius) {   //past right border, go to next line
             //  ball.x = canvas.width + radius;
             //ball.vx *= -1;
-            if ((hgt*2 + gap*2) > ball.y ) {
-                ball.x = ball.radius + 1;
+            if (ball.rowNumber < 3){
                 ball.y += (hgt + gap);
+                ball.x = ball.radius + 1;
+                ball.rowNumber++;
             }
-            else if((hgt*2 + gap*2) <= ball.y && (hgt*3 + gap*2) >= ball.y ) ball.count++;
-        }
-        if (ball.y <= ball.radius+1){            //past top border, rebound
-            ball.vy *= -1;
+            else if(ball.rowNumber == 3) ball.count++;
+
+            /*if ((hgt*2 + gap*2) > ball.y ) {
+            }*/
+           // else if((hgt*2 + gap*2) <= ball.y && (hgt*3 + gap*2) >= ball.y ) ball.count++;
         }
 
         ball.draw(context);
