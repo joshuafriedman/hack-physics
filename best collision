@@ -1,0 +1,36 @@
+function afterCollision(b1, b2) {
+    var rr00 = Math.pow(b1.x - b2.x, 2) + Math.pow(b1.y - b2.y, 2);
+    var hh = Math.sqrt(rr00);
+    var s1 = Math.sqrt(b1.vx*b1.vx+b1.vy*b1.vy);
+    var s2 = Math.sqrt(b2.vx*b2.vx+b2.vy*b2.vy);
+    if(hh < (b1.radius + b2.radius-1)){
+        var diff = Math.sqrt(rr00) - (b1.radius + b2.radius);
+        if(s2<s1 ) {
+            var cx = diff * (b1.vx) / Math.sqrt(b1.vx * b1.vx + b1.vy * b1.vy);
+            var cy = diff * (b1.vy) / Math.sqrt(b1.vx * b1.vx + b1.vy * b1.vy);
+            b1.x += cx;
+            b1.y += cy;
+        }
+
+        else{
+            var cx = diff*(b2.vx)/Math.sqrt(b2.vx*b2.vx + b2.vy*b2.vy);
+            var cy = diff*(b2.vy)/Math.sqrt(b2.vx*b2.vx + b2.vy*b2.vy);
+            b2.x += cx;
+            b2.y += cy;
+        }
+
+    }
+    var rr0 = (b1.x - b2.x)*(b1.vx-b2.vx) + (b1.y - b2.y)*(b1.vy-b2.vy);
+    var rr = (b1.vx-b2.vx)*(b1.vx-b2.vx) + (b1.vy-b2.vy)*(b1.vy-b2.vy);
+    var t = (-1)*(rr0 + Math.sqrt(rr00*rr - (rr)*(rr00-(Math.pow(b1.radius + b2.radius, 2)))))/(rr);
+    var d = (Math.sqrt((Math.pow(b1.x - b2.x + t*(b1.vx-b2.vx), 2)) + (Math.pow(b1.y - b2.y + t*(b1.vy-b2.vy), 2)) ));
+    var jhx = (b1.x-b2.x + t*(b1.vx-b2.vx))/d;
+    var jhy = (b1.y-b2.y + t*(b1.vy-b2.vy))/d;
+    var jx = 2*jhx*jhx*(b1.x-b2.x)/((1/b1.mass)+(1/b2.mass));
+    var jy = 2*jhy*jhy*(b1.y-b2.y)/((1/b1.mass)+(1/b2.mass));
+    b1.vx += jx/b1.mass;
+    b1.vy += jy/b1.mass;
+    b2.vy -= jy/b2.mass;
+    b2.vx -= jx/b2.mass;
+
+}
