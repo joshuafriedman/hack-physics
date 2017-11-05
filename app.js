@@ -1,27 +1,38 @@
 var canvas = document.getElementById("myCanvas");
-var numBalls = 40;
 var radius = 5;
 var context;
 var g = 0;
+var webSocket;
+var balls = [];
+var timer;
+var myHistory = [];
+
+
+// TODO: Websocket Location should be provided as a parameter
+// TODO: Resolution of the energy should be changed with a slider
 
 if (canvas.getContext) {
     context = canvas.getContext("2d");
-    init();
+    webSocket = new WebSocket("ws://raspberrypi.local:1880/getsocket");
+    setInterval(onEachStep, 1000 / 70); // 60 fps    
+    webSocket.onmessage = function (event) {
+        var timeData = { time: (new Date()).getTime(), data: event.data };
+        myHistory.push(timeData);
+    }
 }
 
-function init() {
-    balls = new Array();
-    for (var i = 0; i < numBalls; i++) {
-        var ball = new Ball(radius, getColor());
-        console.log(ball);
-        ball.x = Math.random()*600+10;
-        ball.y = Math.random()*100+10;
-        ball.vx = Math.random() * 5;
-        ball.vy = (Math.random() - 0.5) * 5;
-        ball.draw(context);
-        balls.push(ball);
-    }
-    setInterval(onEachStep, 1000 / 70); // 60 fps
+
+function getBall(scale) {
+    var rate = Math.round(Number(scale / 200));
+    console.log(rate);
+    var ball = new Ball(radius, getColor());
+    console.log(ball);
+    ball.x = Math.random() * 600 + 10;
+    ball.y = Math.random() * 100 + 10;
+    ball.vx = Math.random() * rate;
+    ball.vy = (Math.random() - 0.5) * rate;
+    ball.draw(context);
+    return ball;
 }
 
 function getColor() {
@@ -32,38 +43,76 @@ function getColor() {
 
 function onEachStep() {
     context.clearRect(0, 0, canvas.width, canvas.height);
-    for (var i = 0; i < numBalls; i++) {
-        var ball = balls[i];
-        ball.vy += g;
-        ball.x += ball.vx;
-        ball.y += ball.vy;
-
-        if (ball.y >= canvas.height - radius) {
-            //ball.y = canvas.height - radius;
-            ball.vy *= -1;
-        }
-        if (ball.x >= canvas.width - radius) {
-          //  ball.x = canvas.width + radius;
-            ball.vx *= -1;
-        }
-        if (ball.y <= radius+1){
-            ball.vy *= -1;
-        }
-        if (ball.x <= radius){
-            ball.vx *= -1;
-        }
-        ball.draw(context);
+    if (isNewBall() && myHistory != 0) {
+        // Maybe do average here?
+        let average = getAverageOfHistory(myHistory);
+        console.log("Average:"+average);
+        balls.push(getBall(average));
+        myHistory = [];
     }
-    for(var k=0; k < numBalls-1; k++){
-        for(var j=k+1; j<numBalls; j++)
-            if(length (balls[k], balls[j]) <= 2*radius) {
-                afterCollision(balls[k], balls[j]);
+
+    if (balls.length !== 0) {
+        for (var i = 0; i < balls.length; i++) {
+            var ball = balls[i];
+            ball.vy += g;
+            ball.x += ball.vx;
+            ball.y += ball.vy;
+
+            if (ball.y >= canvas.height - radius) {
+                //ball.y = canvas.height - radius;
+                ball.vy *= -1;
             }
+            if (ball.x >= canvas.width - radius) {
+                //  ball.x = canvas.width + radius;
+                ball.vx *= -1;
+            }
+            if (ball.y <= radius + 1) {
+                ball.vy *= -1;
+            }
+            if (ball.x <= radius) {
+                ball.vx *= -1;
+            }
+            ball.draw(context);
+        }
+        for (var k = 0; k < balls.length - 1; k++) {
+            for (var j = k + 1; j < balls.length; j++)
+                if (length(balls[k], balls[j]) <= 2 * radius) {
+                    afterCollision(balls[k], balls[j]);
+                }
+        }
     }
 }
 
-function length(b1, b2){
-    var squareDistance = Math.pow((b1.x-b2.x), 2) + Math.pow((b1.y-b2.y), 2);
+function getAverageOfHistory(myHistory) {
+    var sum = 0;
+    var sampleSize = Math.round(myHistory.length / 3);
+    if(sampleSize == 0){
+        return myHistory[0].data;
+    }
+    var randomIdx = [];
+
+    for (let i = 0; i < sampleSize; i++) {
+        let position = Math.round(Math.random() * myHistory.length);
+        console.log("Position:" + position);
+        randomIdx.push(position);
+    }
+
+    for (let n of randomIdx) {
+        sum += Number(myHistory[n].data);
+    }
+    return sum / sampleSize;
+}
+
+function isNewBall() {
+    if (myHistory.length !== 0) {
+        var lastTime = myHistory[myHistory.length - 1].time;
+        var timePassed = new Date().getTime() - lastTime;
+        return timePassed > 200;
+    }
+}
+
+function length(b1, b2) {
+    var squareDistance = Math.pow((b1.x - b2.x), 2) + Math.pow((b1.y - b2.y), 2);
     return Math.sqrt(squareDistance);
 };
 
