@@ -1,8 +1,12 @@
 var canvas = document.getElementById("myCanvas");
-var numBalls = 40;
-var radius = 5;
+//var radius = 2.5;
 var context;
 var g = 0;
+var numA = 20, numB = 20, numC = 20;
+var numBalls = numA + numB + numC;
+//var name1 = "A", name2 = "B", name3 = "C";
+//var radiusA = 2, radiusB = 4, radiusC = 6;
+//var massA = 6, massB = 8, massC = 10;
 
 if (canvas.getContext) {
     context = canvas.getContext("2d");
@@ -11,24 +15,47 @@ if (canvas.getContext) {
 
 function init() {
     balls = new Array();
-    for (var i = 0; i < numBalls; i++) {
-        var ball = new Ball(radius, getColor());
-        console.log(ball);
-        ball.x = Math.random()*600+10;
-        ball.y = Math.random()*100+10;
-        ball.vx = Math.random() * 5;
-        ball.vy = (Math.random() - 0.5) * 5;
-        ball.draw(context);
-        balls.push(ball);
+    for (var i = 0; i < numA; i++) {
+        var ballA = new Ball("A");
+        console.log(ballA);
+
+        ballA.x = Math.random()*600+10;
+        ballA.y = Math.random()*100+10;
+        ballA.vx = Math.random() * 5;
+        ballA.vy = (Math.random() - 0.5) * 5;
+        ballA.draw(context);
+        balls.push(ballA);
     }
-    setInterval(onEachStep, 1000 / 70); // 60 fps
+    for (var j = 0; j < numB; j++){
+        var ballB = new Ball("B");
+        console.log(ballB);
+
+        ballB.x = Math.random()*600+10;
+        ballB.y = Math.random()*100+10;
+        ballB.vx = Math.random() * 5;
+        ballB.vy = (Math.random() - 0.5) * 5;
+        ballB.draw(context);
+        balls.push(ballB);
+    }
+    for (var k = 0; k < numC; k++){
+        var ballC = new Ball("C");
+        console.log(ballC);
+
+        ballC.x = Math.random()*600+10;
+        ballC.y = Math.random()*100+10;
+        ballC.vx = Math.random() * 5;
+        ballC.vy = (Math.random() - 0.5) * 5;
+        ballC.draw(context);
+        balls.push(ballC);
+    }
+    setInterval(onEachStep, 1000 / 60); // 60 fps
 }
 
-function getColor() {
+/*function getColor() {
     var colors = ["#588C7E", "#F2E394", "#F2AE72", "#D96459", "#8C4646"];
     let idx = Math.round(Math.random() * colors.length);
     return colors[idx];
-}
+}*/
 
 function onEachStep() {
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -38,25 +65,25 @@ function onEachStep() {
         ball.x += ball.vx;
         ball.y += ball.vy;
 
-        if (ball.y >= canvas.height - radius) {
+        if (ball.y >= canvas.height - ball.radius) {
             //ball.y = canvas.height - radius;
             ball.vy *= -1;
         }
-        if (ball.x >= canvas.width - radius) {
-          //  ball.x = canvas.width + radius;
+        if (ball.x >= canvas.width - ball.radius) {
+            //  ball.x = canvas.width + radius;
             ball.vx *= -1;
         }
-        if (ball.y <= radius+1){
+        if (ball.y <= ball.radius+1){
             ball.vy *= -1;
         }
-        if (ball.x <= radius){
+        if (ball.x <= ball.radius){
             ball.vx *= -1;
         }
         ball.draw(context);
     }
     for(var k=0; k < numBalls-1; k++){
         for(var j=k+1; j<numBalls; j++)
-            if(length (balls[k], balls[j]) <= 2*radius) {
+            if(length (balls[k], balls[j]) <= balls[k].radius + balls[j].radius) {
                 afterCollision(balls[k], balls[j]);
             }
     }
@@ -80,42 +107,33 @@ function afterCollision(b1, b2) {
     b1.y = b1.y + b1.vy * factor;
     b2.x = b2.x + b2.vx * factor;
     b2.y = b2.y + b2.vy * factor;
-    
-    /*if (b1.y > canvas.height - radius) {
-        b1.y = canvas.height - radius;
-        b1.vy *= -0.7;
-    }
-    if (b1.x > canvas.width + radius) {
-        b1.x = -radius;
-    }
- 
 
-    if (b2.y > canvas.height - radius) {
-        b2.y = canvas.height - radius;
-        b2.vy *= -0.7;
-    }
-    if (b2.x > canvas.width + radius) {
-        b2.x = -radius;
-    }*/
-    if (ball.y >= canvas.height - radius) {
+    if (ball.y >= canvas.height - ball.radius) {
         //ball.y = canvas.height - radius;
         ball.vy *= -1;
     }
-    if (ball.x >= canvas.width - radius) {
+    if (ball.x >= canvas.width - ball.radius) {
         //  ball.x = canvas.width + radius;
         ball.vx *= -1;
     }
-    if (ball.y <= radius+1){
+    if (ball.y <= ball.radius+1){
         ball.vy *= -1;
     }
-    if (ball.x <= radius){
+    if (ball.x <= ball.radius){
         ball.vx *= -1;
     }
-    
     b1.draw(context);
     b2.draw(context);
 
 }
+
+
+
+
+
+
+
+
 
 
 
