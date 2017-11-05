@@ -13,38 +13,34 @@
 
 <body>
     <h1>HACK THESE PARTICLES</h1>
-    <canvas id="myCanvas" width="1000" height="400"></canvas>
     <!-- acetone, dichloromethane, benzene-->
 
     <form>
         <div class="row">
 
             <div class="col-sm-4">
-                <label for="validationServer01">Acetone</label>
-                <input type="text" class="form-control is-valid pad" id="validationServer01" placeholder="First name" value="Number of particles"
-                    required>
-                <input type="text" class="form-control is-valid pad" id="validationServer02" value="Size" required>
-                <input type="text" class="form-control is-valid pad" id="validationServer02" value="Mass" required>
+                <label>Acetone</label>
+                <input type="text" class="form-control is-valid pad" id="acetone-particles" placeholder="Number of particles"   required>
+                <input type="text" class="form-control is-valid pad" id="acetone-size" placeholder="Size" required>
+                <input type="text" class="form-control is-valid pad" id="acetone-mass" placeholder="Mass" required>
             </div>
 
             <div class="col-sm-4">
-                <label for="validationServer01">Dichloromethane</label>
-                <input type="text" class="form-control is-valid pad" id="validationServer01" placeholder="First name" value="Number of particles"
-                    required>
-                <input type="text" class="form-control is-valid pad" id="validationServer02" value="Size" required>
-                <input type="text" class="form-control is-valid pad" id="validationServer02" value="Mass" required>
+                <label>Dichloromethane</label>
+                <input type="text" class="form-control is-valid pad" id="dich-particles" placeholder="Number of particles" required>
+                <input type="text" class="form-control is-valid pad" id="dich-size" placeholder="Size" required>
+                <input type="text" class="form-control is-valid pad" id="dich-mass" placeholder="Mass" required>
             </div>
 
             <div class="col-sm-4">
-                <label for="validationServer01">Benzene</label>
-                <input type="text" class="form-control is-valid pad" id="validationServer01" placeholder="First name" value="Number of particles"
-                    required>
-                <input type="text" class="form-control is-valid pad" id="validationServer02" value="Size" required>
-                <input type="text" class="form-control is-valid pad" id="validationServer02" value="Mass" required>
+                <label>Benzene</label>
+                <input type="text" class="form-control is-valid pad" id="benzene-particles" placeholder="Number of particles" required>
+                <input type="text" class="form-control is-valid pad" id="benzene-size" placeholder="Size" required>
+                <input type="text" class="form-control is-valid pad" id="benzene-mass" placeholder="Mass" required>
             </div>
 
         </div>
-            <button class="btn btn-danger" type="submit">START</button>
+            <div class="btn btn-danger button" type="submit" onclick="startSimulation()">START</div>
     </form>
 
     <script type="text/javascript" src="ball.js"></script>

@@ -13,6 +13,26 @@ if (canvas.getContext) {
     init();
 }
 
+function startSimulation(){
+    var options = {};
+    options.benzene = {};
+    options.ditch ={};
+    options.acetone = {};
+    options.benzene.particles = document.getElementById("benzene-particles").value;
+    options.benzene.size = document.getElementById("benzene-size").value;
+    options.benzene.mass = document.getElementById("benzene-mass").value;
+    
+    options.ditch.particles = document.getElementById("dich-particles").value;
+    options.ditch.size = document.getElementById("dich-size").value;
+    options.ditch.mass = document.getElementById("dich-mass").value;
+
+    options.acetone.particles = document.getElementById("acetone-particles").value;
+    options.acetone.size = document.getElementById("acetone-size").value;
+    options.acetone.mass = document.getElementById("acetone-mass").value;
+    console.log(options);    
+}
+
+
 function init() {
     balls = new Array();
     var numBalls = numA + numB + numC;
