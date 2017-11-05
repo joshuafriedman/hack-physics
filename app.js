@@ -1,8 +1,12 @@
 var canvas = document.getElementById("myCanvas");
 var context;
+
 var g = 0;
 var numA = 20, numB = 20, numC = 20;
-var numBalls = numA + numB + numC;
+var numBalls = 0;
+
+var timeInterval = 1000/40;
+var timePassed = 0;
 
 if (canvas.getContext) {
     context = canvas.getContext("2d");
@@ -11,6 +15,7 @@ if (canvas.getContext) {
 
 function init() {
     balls = new Array();
+    var numBalls = numA + numB + numC;
     for (var i = 0; i < numA; i++) {
         var ballA = new Ball("A");
         console.log(ballA);
@@ -44,9 +49,8 @@ function init() {
         ballC.draw(context);
         balls.push(ballC);
     }
-    setInterval(onEachStep, 1000 / 60); // 60 fps
+    setInterval(onEachStep, timeInterval); // 60 fps
 }
-
 /*function getColor() {
     var colors = ["#588C7E", "#F2E394", "#F2AE72", "#D96459", "#8C4646"];
     let idx = Math.round(Math.random() * colors.length);
@@ -55,9 +59,24 @@ function init() {
 
 function onEachStep() {
     context.clearRect(0, 0, canvas.width, canvas.height);
-    for (var i = 0; i < numBalls; i++) {
+    timePassed += timeInterval;
+     if (Math.round(timePassed % 60) == 0) {
+        for (var counter = 0; counter < 2; counter++) {
+            var ball = new Ball("inert");
+            numBalls++;
+            console.log(ball);
+            ball.color = "#000000";
+            ball.radius = 10;
+            ball.x = ball.radius+1;
+            ball.y = Math.random() * 100 + 10;
+            ball.vx = Math.random() * 5;
+            ball.vy = Math.random()  * 5;
+            ball.draw(context);
+            balls.push(ball);
+        }
+    }
+    for (var i = 0; i < balls.length; i++) {
         var ball = balls[i];
-        ball.vy += g;
         ball.x += ball.vx;
         ball.y += ball.vy;
 
@@ -77,9 +96,9 @@ function onEachStep() {
         }
         ball.draw(context);
     }
-    for(var k=0; k < numBalls-1; k++){
-        for(var j=k+1; j<numBalls; j++)
-            if(length (balls[k], balls[j]) <= balls[k].radius + balls[j].radius) {
+    for(var k=0; k < balls.length-1; k++){
+        for(var j=k+1; j<balls.length; j++)
+            if(length (balls[k], balls[j]) <= (balls[k].radius + balls[j].radius)) {
                 afterCollision(balls[k], balls[j]);
             }
     }
@@ -104,50 +123,23 @@ function afterCollision(b1, b2) {
     b2.x = b2.x + b2.vx * factor;
     b2.y = b2.y + b2.vy * factor;
 
-    if (ball.y >= canvas.height - ball.radius) {
-        //ball.y = canvas.height - radius;
-        ball.vy *= -1;
-    }
-    if (ball.x >= canvas.width - ball.radius) {
-        //  ball.x = canvas.width + radius;
-        ball.vx *= -1;
-    }
-    if (ball.y <= ball.radius+1){
-        ball.vy *= -1;
-    }
-    if (ball.x <= ball.radius){
-        ball.vx *= -1;
-    }
+    if (b1.y >= canvas.height - b1.radius)
+        b1.vy *= -1;
+    if (b2.y >= canvas.height - b2.radius)
+        b2.vy *= -1;
+    if (b1.x >= canvas.width - b1.radius)
+        b1.vx *= -1;
+    if (b2.x >= canvas.width - b2.radius)
+        b2.vx *= -1;
+    if (b1.y <= b1.radius+1)
+        b1.vy *= -1;
+    if (b2.y <= b2.radius+1)
+        b2.vy *= -1;
+    if (b1.x <= b1.radius)
+        b1.vx *= -1;
+    if (b2.x <= b2.radius)
+        b2.vx *= -1;
     b1.draw(context);
     b2.draw(context);
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
