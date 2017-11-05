@@ -2,12 +2,53 @@
 
 <html>
 
-    <head></head>
+<head>
+    <title>Thermodynamic Statistics</title>>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+        crossorigin="anonymous"></script>
+</head>
 
-    <body>
-        <canvas id="myCanvas" width="1000" height="400"></canvas>
-        <script type="text/javascript" src="ball.js"></script> 
-        <script type="text/javascript" src="app.js"></script>
-    </body>
+<body>
+    <h1>HACK THESE PARTICLES</h1>
+    <canvas id="myCanvas" width="1000" height="400"></canvas>
+    <!-- acetone, dichloromethane, benzene-->
+
+    <form>
+        <div class="row">
+
+            <div class="col-sm-4">
+                <label for="validationServer01">Acetone</label>
+                <input type="text" class="form-control is-valid pad" id="validationServer01" placeholder="First name" value="Number of particles"
+                    required>
+                <input type="text" class="form-control is-valid pad" id="validationServer02" value="Size" required>
+                <input type="text" class="form-control is-valid pad" id="validationServer02" value="Mass" required>
+            </div>
+
+            <div class="col-sm-4">
+                <label for="validationServer01">Dichloromethane</label>
+                <input type="text" class="form-control is-valid pad" id="validationServer01" placeholder="First name" value="Number of particles"
+                    required>
+                <input type="text" class="form-control is-valid pad" id="validationServer02" value="Size" required>
+                <input type="text" class="form-control is-valid pad" id="validationServer02" value="Mass" required>
+            </div>
+
+            <div class="col-sm-4">
+                <label for="validationServer01">Benzene</label>
+                <input type="text" class="form-control is-valid pad" id="validationServer01" placeholder="First name" value="Number of particles"
+                    required>
+                <input type="text" class="form-control is-valid pad" id="validationServer02" value="Size" required>
+                <input type="text" class="form-control is-valid pad" id="validationServer02" value="Mass" required>
+            </div>
+
+        </div>
+            <button class="btn btn-danger" type="submit">START</button>
+    </form>
+
+    <script type="text/javascript" src="ball.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+</body>
 
 </html>
